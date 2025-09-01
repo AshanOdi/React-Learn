@@ -1,29 +1,17 @@
 import './App.css';
 import Main from './Components/Main';
+import {name, age, myObj, myData} from './Data/myData';
 
-const name = "ashan";
-const age = 26;
-
-const myObj = [ 
-  {
-    name: name,
-    age: age,
-    city: "kolkata",
-    position: "developer"
-  }.
-
-]
-
-const myObj = [ 
-  {
-    name: name,
-    age: age,
-    city: "kolkata",
-    position: "developer"
-  }.
-
-]
-
+const NewBlock = () => {
+  return (
+    <>
+      { myData?.map( ({name,city,position},index) => {
+          return <Main key={index} name = {name}  city={city}  position={position} />
+        })
+        } 
+    </>
+  );
+}
 
 function App() {
 
@@ -50,6 +38,20 @@ function App() {
         <Main />
         <Main />
         <Main />
+
+        <p>**************************</p>
+        {/* { myData.map( (ele) => {
+          return <Main name = {ele.name}  city={ele.city}  position={ele.position} />
+        })
+        }  */}
+
+        {/* { myData.map( ({name,city,position},index) => {
+          return <Main key={index} name = {name}  city={city}  position={position} />
+        })
+        }  */}
+
+        <NewBlock />
+
 
       </div>
     </>
