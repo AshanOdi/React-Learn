@@ -1,0 +1,19 @@
+.mainBlockContainer{
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: auto;
+    gap:20px
+}
+
+.mainBlockContainer img{
+    width:100%;
+    object-fit: contain;
+}
+
+.mainContainer .mainBlockDetails p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
