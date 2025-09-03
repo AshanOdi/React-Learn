@@ -5,10 +5,18 @@ import Unit from './Components/Unit';
 
 const App = () => {
 
-    const [imgUrl,setImgUrl] = useState("");
-    const [name,setName] = useState("");
-    const [city,setCity] = useState("");
-    const [position,setPosition] = useState("");
+    // const [imgUrl,setImgUrl] = useState("");
+    // const [name,setName] = useState("");
+    // const [city,setCity] = useState("");
+    // const [position,setPosition] = useState("");
+
+    const [inputData,setInputData] = useState({
+        imgUrl:"",
+        name:"",
+        city:"",
+        position:""
+    });
+    console.log(inputData);
 
     const [myData,setMyData] = useState([]);
 
@@ -17,7 +25,7 @@ const App = () => {
   return( 
   <div className="main_container">
     <div className="main_left">
-        <input type="text" value={imgUrl} onChange={(e)=>{
+        {/* <input type="text" value={imgUrl} onChange={(e)=>{
             e.preventDefault()
             setImgUrl(e.target.value)
         }}/>
@@ -32,37 +40,72 @@ const App = () => {
         <input type="text" value={position} onChange={(e)=>{
             e.preventDefault()
             setPosition(e.target.value)
-        }}/>
-        <button className="submit_btn" onClick={() =>
-            {
-                
-            setMyData((pre)=>{
-                return [...pre, {
-                image:imgUrl,
-                name:name, 
-                city:city,
-                position:position
-                }];
-            })
+        }}/> */}
 
-            setImgUrl((pre)=>{
-                if (pre.length > 0) {
-                    return ""; }
-                else { return pre; }
+        <input type="text"  value={inputData.imgUrl} onChange={(e)=>{
+            e.preventDefault()
+            setInputData((preInputData)=>{
+                return {...preInputData, 
+                    imgUrl: e.target.value}
             })
+        }} />
+        <input type="text"  value={inputData.name} onChange={(e)=>{
+            e.preventDefault()
+            setInputData((preInputData)=>{
+                return {...preInputData, 
+                    name: e.target.value}
+            })
+        }} />
+        <input type="text"  value={inputData.city} onChange={(e)=>{
+            e.preventDefault()
+            setInputData((preInputData)=>{
+                return {...preInputData, 
+                    city: e.target.value}
+            })
+        }} />
+        <input type="text"  value={inputData.position} onChange={(e)=>{
+            e.preventDefault()
+            setInputData((preInputData)=>{
+                return {...preInputData, 
+                    position: e.target.value}
+            })
+        }} />
+        <button
+            className="submit_btn"
+            onClick={() => {
+                setMyData((prev) => [
+                    ...prev,
+                    {
+                        image: inputData.imgUrl,
+                        name: inputData.name,
+                        city: inputData.city,
+                        position: inputData.position
+                    }
+                ]);
 
-            setName((pre)=>(pre.length > 0) ? "" : pre);
-            setCity((pre)=>(pre.length > 0) ? "" : pre);
-            setPosition((pre)=>(pre.length > 0) ? "" : pre);
-        }
-        }>Submit</button>
-    </div>
+                // Reset all form fields at once
+                setInputData({
+                imgUrl: '',
+                name: '',
+                city: '',
+                position: ''
+                });
+            }}
+            >
+            Submit
+            </button>
+
+        </div>
     <div className="main_Right">
-        {
-            myData?.map( (data,index) => {
-                return <Unit key={index} img={data.image} name={data.name} city={data.city} position={data.position} />
-            })
-        }
+    {
+       myData?.map(({ image, name, city, position }, index) => (
+      <Unit
+        key={index}
+        img={image}
+        name={name}
+        city={city}
+        position={position} />))
+    }
     </div>
 
   </div> 
