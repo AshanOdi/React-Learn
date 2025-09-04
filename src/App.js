@@ -1,115 +1,62 @@
-import { useState } from 'react';
-import './App.css';
-import Unit from './Components/Unit';
+import { useState, useEffect } from "react";
 
+function App() {
+  const [apiId, setApiId] = useState("1");
+  const [data, setData] = useState({});
+  const [search, setSearch] = useState(0);
 
-const App = () => {
+  // console.log(apiId);
+  // console.log(data);
 
-    // const [imgUrl,setImgUrl] = useState("");
-    // const [name,setName] = useState("");
-    // const [city,setCity] = useState("");
-    // const [position,setPosition] = useState("");
+  useEffect(() => {
+    console.log("useEffecr running ");
 
-    const [inputData,setInputData] = useState({
-        imgUrl:"",
-        name:"",
-        city:"",
-        position:""
-    });
-    console.log(inputData);
+    const apiCall = async () => {
+      console.log("apiCall running ");
+      const res = await fetch(
+        `https://jsonplaceholder.typicode.com/posts/${apiId}`
+      );
+      const data = await res.json();
 
-    const [myData,setMyData] = useState([]);
+      if (data) {
+        setData(data);
+        console.log("data fetched");
+      }
+    };
 
-    console.log(myData);
-
-  return( 
-  <div className="main_container">
-    <div className="main_left">
-        {/* <input type="text" value={imgUrl} onChange={(e)=>{
-            e.preventDefault()
-            setImgUrl(e.target.value)
-        }}/>
-        <input type="text" value={name} onChange={(e)=>{
-            e.preventDefault()
-            setName(e.target.value)
-        }}/>
-        <input type="text" value={city} onChange={(e)=>{
-            e.preventDefault()
-            setCity(e.target.value)
-        }}/>
-        <input type="text" value={position} onChange={(e)=>{
-            e.preventDefault()
-            setPosition(e.target.value)
-        }}/> */}
-
-        <input type="text"  value={inputData.imgUrl} onChange={(e)=>{
-            e.preventDefault()
-            setInputData((preInputData)=>{
-                return {...preInputData, 
-                    imgUrl: e.target.value}
-            })
-        }} />
-        <input type="text"  value={inputData.name} onChange={(e)=>{
-            e.preventDefault()
-            setInputData((preInputData)=>{
-                return {...preInputData, 
-                    name: e.target.value}
-            })
-        }} />
-        <input type="text"  value={inputData.city} onChange={(e)=>{
-            e.preventDefault()
-            setInputData((preInputData)=>{
-                return {...preInputData, 
-                    city: e.target.value}
-            })
-        }} />
-        <input type="text"  value={inputData.position} onChange={(e)=>{
-            e.preventDefault()
-            setInputData((preInputData)=>{
-                return {...preInputData, 
-                    position: e.target.value}
-            })
-        }} />
-        <button
-            className="submit_btn"
-            onClick={() => {
-                setMyData((prev) => [
-                    ...prev,
-                    {
-                        image: inputData.imgUrl,
-                        name: inputData.name,
-                        city: inputData.city,
-                        position: inputData.position
-                    }
-                ]);
-
-                // Reset all form fields at once
-                setInputData({
-                imgUrl: '',
-                name: '',
-                city: '',
-                position: ''
-                });
-            }}
-            >
-            Submit
-            </button>
-
-        </div>
-    <div className="main_Right">
-    {
-       myData?.map(({ image, name, city, position }, index) => (
-      <Unit
-        key={index}
-        img={image}
-        name={name}
-        city={city}
-        position={position} />))
+    if (apiId.length > 0 && Number(apiId) > 0 && Number(apiId) <= 100) {
+      console.log("useeffect if Condition");
+      apiCall();
     }
-    </div>
 
-  </div> 
-);
+    return () => {
+      console.log("cleanup");
+      apiCall();
+    };
+    //eslint-disable-next-line
+  }, [search]);
+
+  return (
+    <div>
+      <input
+        type="test"
+        placeholder="enter id"
+        onChange={(e) => {
+          e.preventDefault();
+          setApiId(e.target.value);
+        }}
+      />
+      <button onClick={() => setSearch((pre) => (pre === 0 ? 1 : 0))}>
+        Search
+      </button>
+      {data && (
+        <div>
+          <h3>{data.title}</h3>
+          <p>{data.body}</p>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default App;
