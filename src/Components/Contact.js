@@ -23,7 +23,7 @@ const Contact = () => {
       Contact Page
       <div>
         {mainData?.map(({ id, title }) => (
-          <Link to={`/contact/${id}`}>
+          <Link to={`/contact/${id}`} key={id}>
             <div>
               <h3>{title}</h3>
             </div>
