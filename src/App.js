@@ -1,62 +1,23 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./Components/Home";
+import About from "./Components/About";
+import Contact from "./Components/Contact";
+import ContactDetails from "./Components/ContactDetails";
+import User from "./Components/User";
 
-function App() {
-  const [apiId, setApiId] = useState("1");
-  const [data, setData] = useState({});
-  const [search, setSearch] = useState(0);
-
-  // console.log(apiId);
-  // console.log(data);
-
-  useEffect(() => {
-    console.log("useEffecr running ");
-
-    const apiCall = async () => {
-      console.log("apiCall running ");
-      const res = await fetch(
-        `https://jsonplaceholder.typicode.com/posts/${apiId}`
-      );
-      const data = await res.json();
-
-      if (data) {
-        setData(data);
-        console.log("data fetched");
-      }
-    };
-
-    if (apiId.length > 0 && Number(apiId) > 0 && Number(apiId) <= 100) {
-      console.log("useeffect if Condition");
-      apiCall();
-    }
-
-    return () => {
-      console.log("cleanup");
-      apiCall();
-    };
-    //eslint-disable-next-line
-  }, [search]);
-
+const App = () => {
   return (
-    <div>
-      <input
-        type="test"
-        placeholder="enter id"
-        onChange={(e) => {
-          e.preventDefault();
-          setApiId(e.target.value);
-        }}
-      />
-      <button onClick={() => setSearch((pre) => (pre === 0 ? 1 : 0))}>
-        Search
-      </button>
-      {data && (
-        <div>
-          <h3>{data.title}</h3>
-          <p>{data.body}</p>
-        </div>
-      )}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/contact/details" element={<ContactDetails />} />
+        <Route path="/contact/:id" element={<User />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
