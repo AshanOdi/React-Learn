@@ -1,15 +1,33 @@
 import React, { useReducer } from "react";
 
-const reducer = (state, action) => {
-  if (action.type === "setImage") {
-    return { ...state, image: action.data };
-  } else if (action.type === "setName") {
-    return { ...state, name: action.data };
-  } else if (action.type === "setArray") {
-    return { ...state, dataArray: [...state.dataArray, action.data] };
-  } else {
-    return state;
+const reducerActionTypes = {
+  setImage: "setImage",
+  setName: "setName",
+  setArray: "setArray",
+};
+
+// const reducer = (state, action) => {
+const reducer = (state, { type, data }) => {
+  switch (type) {
+    case reducerActionTypes.setImage:
+      return { ...state, image: data };
+    case reducerActionTypes.setName:
+      return { ...state, name: data };
+    case reducerActionTypes.setArray:
+      return { ...state, array: [...state.dataArray, data] };
+    default:
+      return state;
   }
+
+  // if (action.type === "setImage") {
+  //   return { ...state, image: action.data };
+  // } else if (action.type === "setName") {
+  //   return { ...state, name: action.data };
+  // } else if (action.type === "setArray") {
+  //   return { ...state, dataArray: [...state.dataArray, action.data] };
+  // } else {
+  //   return state;
+  // }
 };
 
 const App = () => {
