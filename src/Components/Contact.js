@@ -65,13 +65,14 @@ const ContactBlock = styled.div`
 const ContactBlockUnit = styled.div`
   background-color: ${(props) => (props.changeTheme ? "black" : "#f7b0b0")};
   padding: 20px;
-  border: 2px solid ${({ changeTheme }) => {
-    if (changeTheme) {
-      return "black";
-    } else {
-      return "#f7b0b0";
-    }
-  }};}
+  border: 2px solid
+    ${({ changeTheme }) => {
+      if (changeTheme) {
+        return "black";
+      } else {
+        return "#f7b0b0";
+      }
+    }};
   border-radius: 7px;
   transition: all 400ms ease-in;
 
